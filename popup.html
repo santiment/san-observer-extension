@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+    <title>SAN Observer</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        background: white;
+      }
+
+      #app {
+        padding: 24px;
+        max-width: 400px;
+        min-width: 400px;
+        margin: auto;
+        font-size: 24px;
+        color: black;
+      }
+
+      .loading {
+        text-align: center;
+        color: #777;
+      }
+
+      h2 {
+        margin: 10px 0;
+        font-size: 1.4rem;
+      }
+
+      #result {
+        color: #000;
+        text-align: left;
+      } 
+
+      small {
+        font-size: 0.8rem;
+        color: #666;
+        letter-spacing: -0.02em; 
+      }
+    </style>
+  </head>
+  <body>
+    <!-- App -->
+    <div id="app">
+      <div id="result" class="loading">Loading...</div>
+      <div id="topWords"></div>
+      <hr />
+      <small>by Santiment API (stage ver.)</small>
+    </div>
+  </body>
+  <!-- Include the library in the page -->
+  <script src="https://unpkg.com/apollo-client-browser@1.9.0"></script>
+  <script src="popup.js" charset="utf-8"></script>
+</html>
