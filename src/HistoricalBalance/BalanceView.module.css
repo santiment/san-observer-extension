@@ -1,0 +1,67 @@
+.BalanceExtension {
+  width: 400px;
+  min-width: 400px;
+  margin: 0 24px;
+}
+
+.InputWrapper {
+  margin: 18px 0;
+  text-align: left;
+}
+
+.InputWrapper label {
+  font-style: normal;
+  font-weight: 600;
+  line-height: 20px;
+  font-size: 14px;
+  color: #7a859e;
+}
+
+.InputWrapper input {
+  margin-top: 0.5rem;
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.InputWithAction {
+  margin-top: 0.5rem;
+  margin-bottom: 0.2rem;
+  display: flex;
+  align-items: center;
+  border: 1px solid #e0e4ee;
+  border-radius: 4px;
+}
+
+.InputWithAction input {
+  margin-top: 0;
+  border: none;
+}
+
+.InputWithAction button {
+  border-left: 1px solid #e0e4ee;
+  border-radius: 0;
+}
+
+.historyDropdown {
+  border: 1px solid #e0e4ee;
+  box-sizing: border-box;
+  box-shadow: 0px 8px 30px rgba(21, 24, 31, 0.1);
+  border-radius: 4px;
+  margin: 0;
+}
+
+.addressLink {
+  padding: 10px;
+  cursor: pointer;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.addressLink:hover {
+  color: #14c393;
+  background: #f6f6f9;
+}

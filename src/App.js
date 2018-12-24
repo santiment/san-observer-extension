@@ -1,16 +1,12 @@
 import React, { Component } from 'react'
-//import TrendsView from './TrendsView'
-import BalanceView from './BalanceView'
+import BalanceView from './HistoricalBalance/BalanceView'
 import './App.css'
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        { 
-          //<TrendsView />
-          <BalanceView />
-        }
+        <BalanceView />
       </div>
     )
   }
