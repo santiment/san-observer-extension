@@ -1,43 +1,21 @@
 import React from 'react'
-import gql from 'graphql-tag'
-import { Query } from 'react-apollo'
-import { Input, Button, SearchWithSuggestions, Select } from '@santiment-network/ui'
+import { Input, Button } from '@santiment-network/ui'
 import '@santiment-network/ui/styles.css'
-import { LineChart, Line, XAxis, Tooltip, CartesianGrid } from 'recharts'
-import moment from 'moment'
+import GetHistoricalBalance from './GetHistoricalBalance'
+import HistoricalBalanceChart from './HistoricalBalanceChart'
+import AssetsField from './AssetsField'
 import styles from './BalanceView.module.css'
-
-const query = gql`
-  query historicalBalance($from: DateTime!, $to: DateTime!, $address: String!, $interval: String!, $slug: String) {
-  historicalBalance(
-    address: $address,
-    interval: $interval,
-    slug: $slug,
-    from: $from,
-    to: $to
-  ) {
-    datetime 
-    balance
-  }
-}
-`
-
-// Dummy array of test values.
-const options = Array.from(new Array(1000), (_, index) => ({
-  label: `Item ${index}`,
-  value: index
-}))
 
 class BalanceView extends React.Component {
   state = {
     address: '0x1f3df0b8390bb8e9e322972c5e75583e87608ec2',
-    slug: 'santiment',
-    history: ['0x1f3df0b8390bb8e9e322972c5e75583e87608ec2'],
+    assets: ['santiment'],
+    history: [],
     isVisibleHistory: false
   }
 
   render() {
-    const { address, slug, isVisibleHistory } = this.state
+    const { address, assets, isVisibleHistory, history } = this.state
     return (
       <div className={styles.BalanceExtension}>
         <div className={styles.InputWrapper}>
@@ -49,76 +27,54 @@ class BalanceView extends React.Component {
               name="address"
               placeholder="Paste the address"
               onChange={this.handleChange} />
-            <Button onClick={() => 
-                this.setState({isVisibleHistory: !isVisibleHistory})}>
-                History
-              </Button>
-            </div>
-            {isVisibleHistory && 
-                <div className={styles.historyDropdown}>
-                  {this.state.history.map(address => (
-                    <div className={styles.addressLink} onClick={() => {
-                      this.setState({address, isVisibleHistory: false})
-                    }}>{address}</div>
-                  ))}
+            {history.length > 0 &&
+                <Button onClick={() => 
+                    this.setState({isVisibleHistory: !isVisibleHistory})}>
+                    History
+                  </Button>}
                 </div>
-            }
-          </div>
-          <div className={styles.InputWrapper}>
-            <label htmlFor="slug">Asset</label>
-            <SearchWithSuggestions
-              data={[
-                'Bibox Token',
-                'Bigbom',
-                'Binance Coin',
-                'BioCoin',
-                'BitBay',
-                'bitcoin'
-              ]}
-              suggestionContent={(suggestion, index) => 
-                <div key={index} onClick={() => console.log('clcikk')}>
-                  {suggestion}
-                </div>
-              }
-              predicate={searchTerm => item =>
-                  item.toUpperCase().includes(searchTerm.toUpperCase())}
-                  maxSuggestions={5}
-                />
-                <Input 
-                  value={slug}
-                  id="slug"
-                  name="slug"
-                  placeholder="For example, Ethereum"
-                  onChange={this.handleChange} />
-                  <Select options={options} />
+                {isVisibleHistory && 
+                    <div className={styles.historyDropdown}>
+                      {this.state.history.map(address => (
+                        <div key={address} className={styles.addressLink} onClick={() => {
+                          this.setState({address, isVisibleHistory: false})
+                        }}>{address}</div>
+                      ))}
+                    </div>
+                }
               </div>
-              <Query query={query} variables={{
-                ...this.state,
-                from: '2017-12-01T16:28:22.486Z',
-                to: '2018-12-07T16:28:22.486Z',
-                interval: '4w'
-              }}>
-              {({ loading, error, data }) => {
-                if (loading) return "Loading..."
-                if (error) return `Error!: ${error}`
-                return (
-                  <LineChart
-                    width={400}
-                    height={400}
-                    data={data.historicalBalance}
-                    margin={{ top: 5, right: 20, left: 10, bottom: 5 }}
-                  >
-                    <XAxis dataKey="name" />
-                    <Tooltip formatter={(value, name, props) => {
-                      return moment(props.payload.datetime).format('YYYY-MM-DD') + ": " + new Intl.NumberFormat().format(value)
-                    }} />
-                  <CartesianGrid stroke="#f5f5f5" />
-                  <Line type="monotone" dataKey="balance" stroke="#387908" yAxisId={1} />
-                </LineChart>
-                )
-              }}
-            </Query>
-          </div>
+              <div className={styles.InputWrapper}>
+                <label htmlFor="slug">Asset</label>
+                <AssetsField 
+                  defaultSelected={assets}
+                  onChange={assets => this.setState({assets: assets.map(asset => asset.value)})} 
+                />
+                <div className='hint'>Up to 5 assets</div>
+              </div>
+              <GetHistoricalBalance 
+                assets={assets}
+                wallet={address}
+                render={data => {
+                  //if (loading) return "Loading..."
+                  //if (error) return `Error!: ${error}`
+                  if (!data || Object.keys(data).length === 0) return (
+                    <div>
+                      ...
+                    </div>
+                  )
+                  const loading = Object.keys(data).reduce((acc, name) => {
+                    return (data[name] || {}).loading
+                  }, true)
+                  return (
+                    <div>
+                      {loading && <span>Calculating balance...</span>}
+                      {
+                        <HistoricalBalanceChart data={data} />
+                      }
+                    </div>
+                  )
+                }} />
+            </div>
     )
   }
 
