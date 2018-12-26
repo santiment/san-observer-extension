@@ -50,6 +50,10 @@
   box-shadow: 0px 8px 30px rgba(21, 24, 31, 0.1);
   border-radius: 4px;
   margin: 0;
+  position: absolute;
+  background: white;
+  width: 400px;
+  z-index: 100;
 }
 
 .addressLink {

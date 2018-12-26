@@ -47,30 +47,27 @@ class BalanceView extends React.Component {
                 <label htmlFor="slug">Asset</label>
                 <AssetsField 
                   defaultSelected={assets}
-                  onChange={assets => this.setState({assets: assets.map(asset => asset.value)})} 
+                  onChange={assets => 
+                      this.setState({assets: assets.map(asset => asset.value)})
+                  }
                 />
                 <div className='hint'>Up to 5 assets</div>
               </div>
               <GetHistoricalBalance 
                 assets={assets}
                 wallet={address}
-                render={data => {
-                  //if (loading) return "Loading..."
-                  //if (error) return `Error!: ${error}`
+                render={({data, error}) => {
+                  if (error) return `Error!: ${error}`
                   if (!data || Object.keys(data).length === 0) return (
-                    <div>
-                      ...
-                    </div>
+                    <HistoricalBalanceChart data={{}} />
                   )
-                  const loading = Object.keys(data).reduce((acc, name) => {
-                    return (data[name] || {}).loading
-                  }, true)
+                  const loading = Object.keys(data).filter(name => {
+                    return ((data[name] || {}).loading)
+                  }).length > 0
                   return (
                     <div>
                       {loading && <span>Calculating balance...</span>}
-                      {
-                        <HistoricalBalanceChart data={data} />
-                      }
+                      {<HistoricalBalanceChart data={data} />}
                     </div>
                   )
                 }} />

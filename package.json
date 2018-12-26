@@ -7,6 +7,7 @@
     "apollo-boost": "^0.1.22",
     "graphql": "^14.0.2",
     "lodash.isequal": "^4.5.0",
+    "lodash.pick": "^4.4.0",
     "moment": "^2.22.2",
     "react": "^16.6.3",
     "react-apollo": "^2.3.2",
