@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
 import { LineChart, Line, Legend, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts'
-import { mergeTimeseriesByKey } from './utils'
+import mergeTimeseriesByKey from './../utils/mergeTimeseriesByKey'
 
 const formatDatetime = datetime => moment(datetime).format('MMM')
 

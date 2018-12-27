@@ -51,7 +51,7 @@ class BalanceView extends React.Component {
                       this.setState({assets: assets.map(asset => asset.value)})
                   }
                 />
-                <div className='hint'>Up to 5 assets</div>
+                <div className={styles.hint}>Up to 5 assets</div>
               </div>
               <GetHistoricalBalance 
                 assets={assets}

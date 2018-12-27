@@ -54,4 +54,4 @@ const mergeTimeseriesByKey = ({ timeseries, key: mergeKey }) => {
   return longestTS
 }
 
-export { mergeTimeseriesByKey }
+export default mergeTimeseriesByKey

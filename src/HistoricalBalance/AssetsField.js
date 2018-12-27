@@ -21,11 +21,13 @@ class AssetsField extends Component {
 
   static propTypes = {
     defaultSelected: PropTypes.array,
-    onChange: PropTypes.func.isRequired
+    onChange: PropTypes.func.isRequired,
+    className: PropTypes.string
   }
 
   static defaultProps = {
-    defaultSelected: []
+    defaultSelected: [],
+    className: 'assets-select'
   }
 
   handleOnChange = selected => {
@@ -45,7 +47,7 @@ class AssetsField extends Component {
         isLoading={this.props.isLoading}
         onChange={this.handleOnChange}
         value={this.state.selected}
-        className='asset-select'
+        className={this.props.className}
         valueKey='value'
       />
     )

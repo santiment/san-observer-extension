@@ -1,9 +1,9 @@
 {
   "name": "src",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "dependencies": {
-    "@santiment-network/ui": "0.3.2",
+    "@santiment-network/ui": "0.3.3",
     "apollo-boost": "^0.1.22",
     "graphql": "^14.0.2",
     "lodash.isequal": "^4.5.0",
